@@ -1,3 +1,5 @@
+//Improve error checking and code restrictions.
+"use strict";
 //Sets end of game
 var gameOver=false;
 
@@ -61,7 +63,7 @@ Enemy.prototype.grab = function() {
 };
 
 // Ower hero/es class.
-var character = function() {
+var Character = function() {
 
     this.hearts =3;
     this.points =0;
@@ -74,28 +76,28 @@ var character = function() {
 
 //Check user inputs to set player character position.
 //This function wont work if the game is over.
-character.prototype.handleInput = function(key)
+Character.prototype.handleInput = function(key)
     {
         if(!gameOver)
         {
             if(key ==  "up"){
-                this.y=this.y-83;
+                this.y-=83;
             }
             if(key ==  "down"&&player.y<395){
-                this.y=this.y+83;
+                this.y+=83;
             }
             if(key ==  "right"&& player.x <404){
-                this.x=this.x+101;
+                this.x+=101;
             }
             if(key ==  "left"&&player.x>0){
-                this.x=this.x-101;
+                this.x-=101;
                 handle =true;
             }
         }
     };
 
 //Resets the character starting posiion.
-character.prototype.reset = function()
+Character.prototype.reset = function()
     {
         this.y = 312;
         this.x = 202;
@@ -105,7 +107,7 @@ character.prototype.reset = function()
 //increase enemies speed.  Does not use dt because character
 // movement is not smoth like
 //bugs do.
-character.prototype.update = function() {
+Character.prototype.update = function() {
     if(this.y <= -20)
     {
         this.points++;
@@ -117,7 +119,7 @@ character.prototype.update = function() {
 
 // Draw the player on the screen and change player appeal if 
 //not alive, required method for game.
-character.prototype.render = function() {
+Character.prototype.render = function() {
     if(!gameOver){ctx.drawImage(Resources.get(this.charpic), this.x, this.y);}
     else{ctx.drawImage(Resources.get(this.chardead), this.x, this.y);}
     
@@ -128,13 +130,10 @@ character.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var firstE = new Enemy(120);
-var secondE = new Enemy(140);
-var thirdE = new Enemy(200);
-var fourthE = new Enemy(250);
-var fifthE = new Enemy(300);
-var allEnemies = [firstE,secondE,thirdE,fourthE,fifthE];
-var player = new character();
+
+
+var allEnemies = [new Enemy(120),new Enemy(140),new Enemy(200),new Enemy(250),new Enemy(300)];
+var player = new Character();
 
 
 
