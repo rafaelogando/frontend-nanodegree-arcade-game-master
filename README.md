@@ -10,14 +10,14 @@ How to Start the game:
 -Open the index.html file using your web browser.
 -Thats it.
 
-
+=
 Game controls:
 
 -Use the up,down,left and right keys to move the character along the screen.
 
 -Click over the "try again" button after game is over to retry.
 
-
+=
 Requirement:
 
 -Your web browse must allow and support javascript.
