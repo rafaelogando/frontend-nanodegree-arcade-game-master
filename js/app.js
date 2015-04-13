@@ -1,13 +1,17 @@
 //Sets end of game
 var gameOver=false;
 
+// Used to check if the player has moved left with an 
+//enemy  too close.
+var handle=false;
+
 // Enemies our player must avoid
 var Enemy = function(speed) {
-    this.y;
-    this.x;
+    this.y=0;
+    this.x=0;
     this.speed = speed;
     this.sprite = 'images/enemy-bug.png';
-}
+};
 
 
 //Generates a random position for the next time the bug 
@@ -16,7 +20,7 @@ Enemy.prototype.randomPos = function()
     {
         this.x=-101;
         this.y=(Math.round((Math.random()*2)+1)*83)-20;
-    }
+    };
     
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -27,26 +31,34 @@ Enemy.prototype.update = function(dt)
     {
         this.randomPos();
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() 
 {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 //Checks if the player has been grabbed by a bug and if true 
 //reset player position and set the game to over if player
 // have no hearts(lifes) left.
 Enemy.prototype.grab = function() {
     if( (this.x+20) >= player.x && this.x <= (player.x+20) && player.y == this.y)
-        {
+    {
             
-            player.reset();
-            player.hearts--;
-            if(player.hearts<=0){gameOver=true;}
-        }
-}
+        player.reset();
+        player.hearts--;
+        if(player.hearts<=0){gameOver=true;}
+    }
+    if((this.x+20)-player.x > 0 && (this.x+20)-player.x < 101 && handle && this.y== player.y)
+    {
+        //Checks for collitions made by moving towards an enemy.
+        player.reset();
+        player.hearts--;
+        if(player.hearts<=0){gameOver=true;}
+        handle=false;
+    }
+};
 
 // Ower hero/es class.
 var character = function() {
@@ -58,7 +70,7 @@ var character = function() {
  
     this.charpic = 'images/char-boy.png';
     this.chardead = 'images/dead.png';
-}
+};
 
 //Check user inputs to set player character position.
 //This function wont work if the game is over.
@@ -68,25 +80,26 @@ character.prototype.handleInput = function(key)
         {
             if(key ==  "up"){
                 this.y=this.y-83;
-            };
+            }
             if(key ==  "down"&&player.y<395){
                 this.y=this.y+83;
-            };
+            }
             if(key ==  "right"&& player.x <404){
                 this.x=this.x+101;
-            };
+            }
             if(key ==  "left"&&player.x>0){
                 this.x=this.x-101;
-            };
-        };
-    }
+                handle =true;
+            }
+        }
+    };
 
 //Resets the character starting posiion.
 character.prototype.reset = function()
     {
         this.y = 312;
         this.x = 202;
-    }
+    };
 
 //Sets the character points status, resest its position and
 //increase enemies speed.  Does not use dt because character
@@ -97,20 +110,18 @@ character.prototype.update = function() {
     {
         this.points++;
         this.reset();
-        for(e in allEnemies)
-        {
-             allEnemies[e].speed=allEnemies[e].speed+25;
-        }
+        allEnemies.forEach(function(enemy) {enemy.speed=enemy.speed+25;
+          });
     } 
-}
+};
 
 // Draw the player on the screen and change player appeal if 
 //not alive, required method for game.
 character.prototype.render = function() {
     if(!gameOver){ctx.drawImage(Resources.get(this.charpic), this.x, this.y);}
-    else{ctx.drawImage(Resources.get(this.chardead), this.x, this.y)};
+    else{ctx.drawImage(Resources.get(this.chardead), this.x, this.y);}
     
-}
+};
 
 
 

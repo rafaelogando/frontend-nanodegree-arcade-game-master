@@ -41,13 +41,11 @@ var Engine = (function(global) {
     //restar the game if so. This button only appears after game is over.
     canvas.addEventListener("click",function(event)
         {
-            if(gameOver&&getMousePos(canvas,event).x > 312 && getMousePos(canvas,event).x < 488 
-                && getMousePos(canvas,event).y > 403 && getMousePos(canvas,event).y < 463)
+            if(gameOver&&getMousePos(canvas,event).x > 312 && getMousePos(canvas,event).x < 488 && getMousePos(canvas,event).y > 403 && getMousePos(canvas,event).y < 463)
             {
-                for(e in allEnemies)
-                {
-                    allEnemies[e].speed = allEnemies[e].speed-player.points*25;
-                }
+            allEnemies.forEach(function(enemy) {
+            enemy.speed=enemy.speed-player.points*25;
+        });  
                 player.hearts=3;
                 player.points=0;
                 gameOver=false;
@@ -87,7 +85,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -137,11 +135,11 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        for(e in allEnemies)
-            {
-                allEnemies[e].update(dt);
-                allEnemies[e].grab();
-            }
+      allEnemies.forEach(function(enemy) {
+            enemy.update(dt);
+            enemy.grab();
+        });
+        
         //allEnemies.forEach(function(enemy) {
         //    enemy.update(dt);
         //});
@@ -219,14 +217,14 @@ var Engine = (function(global) {
         player.render();
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
+    //  handle game reset states. It's only called once by the init() method.
+     
     function reset() {
 
         player.reset();
-        for(e in allEnemies){allEnemies[e].randomPos();}// noop
+        allEnemies.forEach(function(enemy) {
+            enemy.randomPos();
+        });
     }
 
     /* Go ahead and load all of the images we know we're going to need to
