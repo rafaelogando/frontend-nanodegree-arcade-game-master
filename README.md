@@ -18,7 +18,7 @@ Game controls:
 -Click over the "try again" button after game is over to retry.
 
 =
-Requirement:
+Requirements:
 
 -Your web browse must allow and support javascript.
 
