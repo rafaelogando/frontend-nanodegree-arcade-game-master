@@ -41,7 +41,7 @@
     toggleButtonsAbledness();
 
     var myWorker = new Worker("worker.js");
-    myWorker.postMessage(type,imageData);
+    myWorker.postMessage({'imageData': imageData, 'type': type});
 
     myWorker.onmessage=function(e){imageData=e.data; type=imageData.type;};
     // Hint! This is where you should post messages to the web worker and
