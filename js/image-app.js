@@ -40,13 +40,12 @@
 
     toggleButtonsAbledness();
 
-<<<<<<< HEAD
+
     var myWorker = new Worker("js/worker.js");
     myWorker.postMessage(type,imageData);
-=======
     var myWorker = new Worker("worker.js");
     myWorker.postMessage({'imageData': imageData, 'type': type});
->>>>>>> origin/gh-pages
+
 
     myWorker.onmessage=function(e){imageData=e.data; type=imageData.type;};
     // Hint! This is where you should post messages to the web worker and
