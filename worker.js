@@ -1,4 +1,4 @@
-importScripts('imageManips.js');
+importScripts('js/imageManips.js');
 
 this.onmessage = function(e) {
   var imageData = e.data.imageData;
