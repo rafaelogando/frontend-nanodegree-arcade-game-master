@@ -42,7 +42,7 @@
 
 
    
-    var myWorker = new Worker("worker.js");
+    var myWorker = new Worker("js/worker.js");
     myWorker.postMessage({'imageData': imageData, 'type': type});
 
     myWorker.onmessage=function(e){imageData=e.data; type=imageData.type;};
