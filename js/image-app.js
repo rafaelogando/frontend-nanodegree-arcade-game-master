@@ -40,7 +40,7 @@
 
     toggleButtonsAbledness();
 
-    var myWorker = new Worker("worker.js");
+    var myWorker = new Worker("js/worker.js");
     myWorker.postMessage(type,imageData);
 
     myWorker.onmessage=function(e){imageData=e.data; type=imageData.type;};
