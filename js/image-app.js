@@ -42,12 +42,10 @@
 
     myWorker.postMessage({'imageData': imageData, 'type': type});
 
-    myWorker.onmessage=function(e){imageData=e.data; type=imageData.type;};
+    myWorker.onmessage=function(e){ctx.putImageData(e.data, 0, 0);};
     // Hint! This is where you should post messages to the web worker and
     // receive messages from the web worker.
-
     toggleButtonsAbledness();
-    return ctx.putImageData(imageData, 0, 0);
   };
 
   function revertImage() {
