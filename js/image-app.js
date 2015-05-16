@@ -5,7 +5,7 @@
   imageLoader.addEventListener('change', handleImage, false);
   var canvas = document.querySelector('#image');
   var ctx = canvas.getContext('2d');
-
+  var myWorker = new Worker("js/worker.js");
   function handleImage(e){
     var reader = new FileReader();
     reader.onload = function(event){
@@ -40,9 +40,6 @@
 
     toggleButtonsAbledness();
 
-
-   
-    var myWorker = new Worker("js/worker.js");
     myWorker.postMessage({'imageData': imageData, 'type': type});
 
     myWorker.onmessage=function(e){imageData=e.data; type=imageData.type;};
